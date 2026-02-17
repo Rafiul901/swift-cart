@@ -3,67 +3,213 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-        <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <title>SwiftCart - Products</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <!-- Font Awesome 6 Free - Solid + Brands (all icons we used are in Free) -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Font Awesome 6 Free - Solid + Brands -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* Ensure modal backdrop works properly */
+        .modal {
+            backdrop: blur(4px);
+        }
+        
+        /* Prevent body scroll when modal is open */
+        .modal-open {
+            overflow: hidden;
+        }
+        
+        /* Line clamp for product titles */
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    </style>
 </head>
 <body>
     <header>
         <nav class="navbar bg-base-100 border-b shadow-sm sticky top-0 z-50 px-4 sm:px-6 md:px-8">
-  <div class="flex items-center justify-between w-full max-w-7xl mx-auto">
-    
-    <!-- Left section with logo -->
-    <div class="flex items-center gap-2">
-      <a href="#" class="text-xl sm:text-2xl font-bold text-primary whitespace-nowrap">SwiftCart</a>
-    </div>
+            <div class="flex items-center justify-between w-full max-w-7xl mx-auto">
+                <!-- Left section with logo -->
+                <div class="flex items-center gap-2">
+                    <a href="#" class="text-xl sm:text-2xl font-bold text-primary whitespace-nowrap">SwiftCart</a>
+                </div>
 
-    <!-- Desktop Navigation - Centered -->
-    <div class="hidden lg:flex items-center justify-center flex-1">
-      <ul class="flex items-center gap-1 md:gap-2">
-        <li><a href="index.html" class="px-3 py-2 text-sm md:text-base hover:text-primary transition-colors duration-200 rounded-lg hover:bg-base-200">Home</a></li>
-        <li><a href="products.html" class="px-3 py-2 text-sm md:text-base hover:text-primary transition-colors duration-200 rounded-lg hover:bg-base-200">Products</a></li>
-        <li><a href="" class="px-3 py-2 text-sm md:text-base hover:text-primary transition-colors duration-200 rounded-lg hover:bg-base-200">About</a></li>
-        <li><a href="" class="px-3 py-2 text-sm md:text-base hover:text-primary transition-colors duration-200 rounded-lg hover:bg-base-200">Contact</a></li>
-      </ul>
-    </div>
+                <!-- Desktop Navigation - Centered -->
+                <div class="hidden lg:flex items-center justify-center flex-1">
+                    <ul class="flex items-center gap-1 md:gap-2">
+                        <li><a href="index.html" class="px-3 py-2 text-sm md:text-base hover:text-primary transition-colors duration-200 rounded-lg hover:bg-base-200">Home</a></li>
+                        <li><a href="products.html" class="px-3 py-2 text-sm md:text-base hover:text-primary transition-colors duration-200 rounded-lg hover:bg-base-200">Products</a></li>
+                        <li><a href="" class="px-3 py-2 text-sm md:text-base hover:text-primary transition-colors duration-200 rounded-lg hover:bg-base-200">About</a></li>
+                        <li><a href="" class="px-3 py-2 text-sm md:text-base hover:text-primary transition-colors duration-200 rounded-lg hover:bg-base-200">Contact</a></li>
+                    </ul>
+                </div>
 
-    <!-- Right section with icons -->
-    <div class="flex items-center gap-2 sm:gap-3">
-      
-      <!-- Shopping cart icon -->
-      <div class="dropdown dropdown-end">
-        <label tabindex="0" class="btn btn-ghost btn-circle btn-sm sm:btn-md">
-          <div class="indicator">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-            </svg>
-            
-          </div>
-        </label>
+                <!-- Right section with icons -->
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <!-- Shopping cart icon -->
+                    <div class="dropdown dropdown-end">
+                        <label tabindex="0" class="btn btn-ghost btn-circle btn-sm sm:btn-md">
+                            <div class="indicator">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                                </svg>
+                                <span class="badge badge-sm indicator-item bg-primary text-white cart-count">0</span>
+                            </div>
+                        </label>
+                    </div>
 
-  
-      </div>
-
-      <!-- Mobile menu button -->
-      <div class="dropdown dropdown-end lg:hidden">
-        <label tabindex="0" class="btn btn-ghost btn-circle btn-sm sm:btn-md">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        </label>
-        <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-48 sm:w-52 right-0">
-          <li><a href="index.html" class="py-2">Home</a></li>
-          <li><a href="products.html" class="py-2">Products</a></li>
-          <li><a href="" class="py-2">About</a></li>
-          <li><a href="" class="py-2">Contact</a></li>
-        </ul>
-      </div>
-      
-    </div>
-  </div>
-</nav>
+                    <!-- Mobile menu button -->
+                    <div class="dropdown dropdown-end lg:hidden">
+                        <label tabindex="0" class="btn btn-ghost btn-circle btn-sm sm:btn-md">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                        </label>
+                        <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-48 sm:w-52 right-0">
+                            <li><a href="index.html" class="py-2">Home</a></li>
+                            <li><a href="products.html" class="py-2">Products</a></li>
+                            <li><a href="" class="py-2">About</a></li>
+                            <li><a href="" class="py-2">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
     </header>
+
+    <main>
+        <!-- Products Categories Section -->
+        <section class="py-16 md:py-20 bg-base-100">
+            <div class="container mx-auto px-6 lg:px-8 max-w-7xl">
+                <!-- Section Heading -->
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-base-content">
+                        Our Products
+                    </h2>
+                </div>
+
+                <!-- Categories Container - Will be populated by JavaScript -->
+                <div id="categoriesContainer" class="flex flex-wrap justify-center gap-3 md:gap-4 mb-12">
+                    <!-- Loading spinner will appear here -->
+                    <div class="text-center w-full py-4">
+                        <span class="loading loading-spinner loading-md text-primary"></span>
+                    </div>
+                </div>
+
+                <!-- Products Grid Container - Will be populated by JavaScript -->
+                <div id="productsContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+                    <!-- Products will be dynamically inserted here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Details Modal -->
+        <dialog id="productModal" class="modal">
+            <div class="modal-box w-11/12 max-w-3xl p-0">
+                <form method="dialog">
+                    <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 z-10">✕</button>
+                </form>
+                <div id="modalContent" class="p-6">
+                    <!-- Modal content will be dynamically inserted here -->
+                </div>
+            </div>
+            <form method="dialog" class="modal-backdrop">
+                <button>close</button>
+            </form>
+        </dialog>
+
+        <!-- Why Choose Us Section -->
+
+    </main>
+
+    <footer class="bg-gray-800 text-neutral-content">
+        <div class="container mx-auto px-6 lg:px-8 py-16">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
+                <!-- Brand & Description -->
+                <div>
+                    <h3 class="text-2xl font-bold text-primary mb-4">SwiftCart</h3>
+                    <p class="text-white mb-6 leading-relaxed">
+                        Your one-stop shop for all your fashion and lifestyle needs. 
+                        Quality products, fast delivery, and excellent support.
+                    </p>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-6 uppercase tracking-wider">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="index.html" class="link link-hover">Home</a></li>
+                        <li><a href="products.html" class="link link-hover">Products</a></li>
+                        <li><a href="#" class="link link-hover">About</a></li>
+                        <li><a href="#" class="link link-hover">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Support -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-6 uppercase tracking-wider">Support</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="link link-hover">FAQ</a></li>
+                        <li><a href="#" class="link link-hover">Shipping</a></li>
+                        <li><a href="#" class="link link-hover">Returns</a></li>
+                        <li><a href="#" class="link link-hover">Privacy Policy</a></li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-6 uppercase tracking-wider">Subscribe to our Newsletter</h4>
+                    <p class="mb-6">
+                        The latest news, articles, and resources, sent to your inbox weekly.
+                    </p>
+                    
+                    <div class="join w-full">
+                        <input 
+                            type="email" 
+                            placeholder="Enter your email" 
+                            class="input input-bordered join-item flex-1 bg-base-100 text-base-content placeholder:text-base-content/50 focus:outline-none"
+                        />
+                        <button class="btn btn-primary join-item">
+                            Subscribe
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Bar -->
+            <div class="mt-16 pt-10 border-t border-neutral-content/10 text-center md:text-left">
+                <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                    <p class="text-sm opacity-70">
+                        © 2025 SwiftCart, Inc. All rights reserved.
+                    </p>
+
+                    <!-- Social Icons -->
+                    <div class="flex gap-6">
+                        <a href="#" class="text-xl hover:text-primary transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-xl hover:text-primary transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-xl hover:text-primary transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-xl hover:text-primary transition-colors">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="text-xl hover:text-primary transition-colors">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Link to external JavaScript file -->
+    <script src="script.js"></script>
 </body>
 </html>
